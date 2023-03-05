@@ -23,6 +23,13 @@ test {
 }
 
 publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'io.github.kezhenxu94'
+            artifactId = 'chatgpt-java-sdk'
+            from components.java
+        }
+    }
     repositories {
         maven {
             name = "GitHubPackages"
