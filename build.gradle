@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.github.kezhenxu94'
+version = '0.1.0'
+sourceCompatibility = '8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
