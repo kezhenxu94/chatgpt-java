@@ -2,7 +2,7 @@ package io.github.kezhenxu94.chatgpt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.kezhenxu94.chatgpt.internal.ChatGPTHttpRequest;
-import io.github.kezhenxu94.chatgpt.internal.ChatGPTResponse;
+import io.github.kezhenxu94.chatgpt.internal.ChatGPTHttpResponse;
 import io.github.kezhenxu94.chatgpt.internal.JsonBodyHandler;
 import io.github.kezhenxu94.chatgpt.message.Message;
 
@@ -47,7 +47,7 @@ final class ConversationImpl implements Conversation {
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(request)))
                 .build(),
-            new JsonBodyHandler<>(ChatGPTResponse.class));
+            new JsonBodyHandler<>(ChatGPTHttpResponse.class));
     final var chatCompletionResponse = response.body();
     final var choice = chatCompletionResponse.choices().iterator().next();
 

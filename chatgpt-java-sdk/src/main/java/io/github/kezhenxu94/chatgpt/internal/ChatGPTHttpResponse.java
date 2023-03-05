@@ -6,7 +6,7 @@ import io.github.kezhenxu94.chatgpt.message.Message;
 
 import java.util.List;
 
-public class ChatGPTResponse {
+public class ChatGPTHttpResponse {
   private final String id;
   private final String object;
   private final long created;
@@ -15,7 +15,7 @@ public class ChatGPTResponse {
   private final List<Choice> choices;
 
   @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-  public ChatGPTResponse(
+  public ChatGPTHttpResponse(
       @JsonProperty("id") String id,
       @JsonProperty("object") String object,
       @JsonProperty("created") long created,
