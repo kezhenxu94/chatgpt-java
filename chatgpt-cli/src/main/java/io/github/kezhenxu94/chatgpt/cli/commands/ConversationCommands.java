@@ -6,10 +6,10 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 @ShellComponent
-public class AskCommands {
+public class ConversationCommands {
   private final Conversation conversation;
 
-  public AskCommands(ChatGPT chatGPT) {
+  public ConversationCommands(ChatGPT chatGPT) {
     conversation = chatGPT.newConversation();
   }
 

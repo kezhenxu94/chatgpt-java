@@ -18,6 +18,48 @@ env:
   DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
+  build-artifacts:
+    name: Build Artifacts
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      matrix:
+        os: [ ubuntu, macos, windows ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          version: '22.3.1'
+          java-version: '17'
+          cache: 'gradle'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Assets
+        run: ./gradlew --no-daemon nativeCompile --parallel
+      - name: Upload Assets
+        uses: actions/upload-artifact@v3
+        with:
+          name: chatgpt-cli-${{ matrix.os }}
+          path: chatgpt-cli/build/native/nativeCompile/*
+
+  upload-release:
+    name: Upload Release Assets
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    strategy:
+      matrix:
+        os: [ ubuntu, macos, windows ]
+    needs:
+      - build-artifacts
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: chatgpt-cli-${{ matrix.os }}
+          path: chatgpt-cli-${{ matrix.os }}
+      - name: Upload
+        uses: softprops/action-gh-release@v1
+        with:
+          files: chatgpt-cli-${{ matrix.os }}
+
   push-docker:
     name: Publish Docker Image
     runs-on: ubuntu-latest
