@@ -12,11 +12,6 @@ concurrency:
   group: release-chatgpt-java-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  DOCKER_REGISTRY: ghcr.io/kezhenxu94/chatgpt-java
-  DOCKER_USERNAME: ${{ github.actor }}
-  DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
   build-artifacts:
     name: Build Artifacts
@@ -57,6 +52,7 @@ jobs:
         with:
           name: chatgpt-cli-${{ matrix.os }}
           path: chatgpt-cli-${{ matrix.os }}
+      - run: tree
       - name: Upload
         uses: softprops/action-gh-release@v1
         with:
@@ -68,6 +64,15 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      matrix:
+        registry:
+          - url: ghcr.io/kezhenxu94/chatgpt-java
+            username: ${{ github.actor }}
+            password: GITHUB_TOKEN
+          - url: docker.io/kezhenxu94
+            username: kezhenxu94
+            password: DOCKER_TOKEN
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
@@ -78,6 +83,10 @@ jobs:
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Docker Image
+        env:
+          DOCKER_REGISTRY: ${{ matrix.registry.url }}
+          DOCKER_USERNAME: ${{ matrix.registry.username }}
+          DOCKER_PASSWORD: ${{ secrets[matrix.registry.password] }}
         run: |
           ./gradlew --no-daemon \
             bootBuildImage \
