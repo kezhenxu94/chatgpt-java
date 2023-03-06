@@ -118,4 +118,6 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          MAVEN_SIGNING_KEY: ${{ secrets.MAVEN_SIGNING_KEY }}
+          MAVEN_SIGNING_PASSWORD: ${{ secrets.MAVEN_SIGNING_PASSWORD }}
         run: ./gradlew --no-daemon publish

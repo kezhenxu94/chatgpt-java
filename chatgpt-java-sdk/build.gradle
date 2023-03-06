@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'signing'
 }
 
 sourceCompatibility = '11'
@@ -20,10 +21,46 @@ test {
     useJUnitPlatform()
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+signing {
+    def signingKey = System.getenv("MAVEN_SIGNING_KEY")
+    def signingPassword = System.getenv("MAVEN_SIGNING_PASSWORD")
+
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications
+}
+
 publishing {
     publications {
         maven(MavenPublication) {
             from components.java
+            pom {
+                name = "ChatGPT Java SDK"
+                description = "Java SDK for ChatGPT"
+                url = "https://github.com/kezhenxu94/chatgpt-java"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "kezhenxu94"
+                        name = "Zhenxu Ke"
+                        email = "kezhenxu94@apache.org"
+                    }
+                }
+                scm {
+                    connection = "scm:svn:https://github.com/kezhenxu94/chatgpt-java"
+                    developerConnection = "scm:svn:https://github.com/kezhenxu94/chatgpt-java"
+                    url = "https://github.com/kezhenxu94/chatgpt-java"
+                }
+            }
         }
     }
     repositories {
@@ -35,5 +72,11 @@ publishing {
                 password = System.getenv("MAVEN_PASSWORD")
             }
         }
+    }
+}
+
+javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 }
