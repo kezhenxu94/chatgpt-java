@@ -1,4 +1,6 @@
-# ChatGPT Java SDK and CLI
+# ChatGPT Java SDK
+
+# ChatGPT CLI
 
 > Who on earth would want to use CLI to interact with ChatGPT? Developers!
 
@@ -11,8 +13,19 @@ to [OpenAI Account](https://platform.openai.com/account/api-keys) to create one.
 export CHATGPT_API_KEY=<your-api-key>
 ```
 
+## Download the CLI
+
+Head to [Releases](https://github.com/kezhenxu94/chatgpt-java/releases) to download the CLI according to your os.
+
+```shell
+sudo install chatgpt-cli.macos /usr/local/bin/chatgpt
+chatgpt
+> ask 'What is your name?'
+```
+
 ## Running the CLI in Docker
 
 ```shell
 docker run -it --rm -e CHATGPT_API_KEY kezhenxu94/chatgpt-cli
+> ask 'What is your name?'
 ```
