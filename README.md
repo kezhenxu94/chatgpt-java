@@ -31,6 +31,8 @@ public class ChatGPTTest {
 }
 ```
 
+A demo usage of ChatGPT Java SDK is the [ChatGPT CLI](#chatgpt-cli), built with Spring Shell and Graalvm.
+
 # ChatGPT CLI
 
 > Who on earth would want to use CLI to interact with ChatGPT? Developers!
