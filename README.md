@@ -14,5 +14,5 @@ export CHATGPT_API_KEY=<your-api-key>
 ## Running the CLI in Docker
 
 ```shell
-docker run -it --rm -e CHATGPT_API_KEY ghcr.io/kezhenxu94/chatgpt-java/chatgpt-cli
+docker run -it --rm -e CHATGPT_API_KEY kezhenxu94/chatgpt-cli
 ```

@@ -56,7 +56,9 @@ jobs:
       - name: Upload
         uses: softprops/action-gh-release@v1
         with:
-          files: chatgpt-cli-${{ matrix.os }}/chatgpt-cli/build/native/nativeCompile/chatgpt-cli*
+          files: |
+            chatgpt-cli-${{ matrix.os }}/chatgpt-cli
+            chatgpt-cli-${{ matrix.os }}/chatgpt-cli.exe
 
   push-docker:
     name: Publish Docker Image
