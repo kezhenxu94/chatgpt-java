@@ -37,11 +37,11 @@ jobs:
           path: chatgpt-cli/build/native/nativeCompile/*
 
   upload-release:
+    if: startsWith(github.ref, 'refs/tags/')
     name: Upload Release Assets
     permissions:
       contents: write
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
     strategy:
       matrix:
         os: [ ubuntu, macos, windows ]
@@ -55,7 +55,7 @@ jobs:
       - name: Rename Artifacts
         run: |
           mv chatgpt-cli-${{ matrix.os }}/chatgpt-cli chatgpt-cli.${{ matrix.os }}
-          mv chatgpt-cli-${{ matrix.os }}/chatgpt-cli.exe-* chatgpt-cli.${{ matrix.os }}.exe
+          mv chatgpt-cli-${{ matrix.os }}/chatgpt-cli.exe chatgpt-cli.${{ matrix.os }}.exe || true
 
       - name: Upload
         uses: softprops/action-gh-release@v1
