@@ -62,7 +62,10 @@ docker run -it --rm -e CHATGPT_API_KEY kezhenxu94/chatgpt-cli
 
 ## Usage
 
-`chatgpt-cli` by default runs in interactive mode, use `ask` command to ask ChatGPT any question:
+### Conversation (Interactive Mode)
+
+`chatgpt-cli` by default runs in interactive mode and the questions in one session is a conversation, so ChatGPT remembers
+your previous questions inside a single conversation, you can use `ask` command to ask ChatGPT any question:
 
 ```shell
 chatgpt
@@ -74,6 +77,17 @@ Or you can omit `--question` and simply:
 ```shell
 chatgpt
 > ask "What is your name?"
+> ask "What did I ask you?"
+# should reply something like "You asked for my name."
 ```
 
 But don't forget to quote the question if it contains spaces.
+
+### One-shot (Non-Interactive Mode)
+
+If you want to ask ChatGPT a one-shot question, you can pass the `ask` command and the question directly, so ChatGPT will
+exit after it replies your questions:
+
+```shell
+chatgpt ask "What is your name?"
+```
