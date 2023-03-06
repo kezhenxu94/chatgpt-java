@@ -7,6 +7,8 @@ public interface ChatGPT {
 
   String apiKey();
 
+  int conversationSize();
+
   static Builder builder() {
     return new ChatGPTBuilder();
   }

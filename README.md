@@ -52,13 +52,28 @@ Head to [Releases](https://github.com/kezhenxu94/chatgpt-java/releases) to downl
 
 ```shell
 sudo install chatgpt-cli.macos /usr/local/bin/chatgpt
-chatgpt
-> ask 'What is your name?'
 ```
 
 ## Running the CLI in Docker
 
 ```shell
 docker run -it --rm -e CHATGPT_API_KEY kezhenxu94/chatgpt-cli
-> ask 'What is your name?'
 ```
+
+## Usage
+
+`chatgpt-cli` by default runs in interactive mode, use `ask` command to ask ChatGPT any question:
+
+```shell
+chatgpt
+> ask --question 'What is your name?'
+```
+
+Or you can omit `--question` and simply:
+
+```shell
+chatgpt
+> ask "What is your name?"
+```
+
+But don't forget to quote the question if it contains spaces.

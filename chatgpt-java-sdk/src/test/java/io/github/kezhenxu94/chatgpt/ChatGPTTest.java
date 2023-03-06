@@ -4,9 +4,11 @@ import java.io.IOException;
 
 public class ChatGPTTest {
   public static void main(String[] args) throws IOException, InterruptedException {
-    final var chatGPT = ChatGPT.builder().build();
+    final var chatGPT = ChatGPT.builder().conversationSize(2).build();
     final var conversation = chatGPT.newConversation();
     System.out.println(conversation.ask("What's your name?").content());
+    System.out.println(conversation.ask("What's your hobbit?").content());
+    System.out.println(conversation.ask("What's your favorite song?").content());
     System.out.println(conversation.ask("What did I ask you?").content());
 
     final var conversation2 = chatGPT.newConversation("You are a software engineer.");

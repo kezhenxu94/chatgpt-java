@@ -11,7 +11,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 final class ConversationImpl implements Conversation {
@@ -24,7 +24,7 @@ final class ConversationImpl implements Conversation {
 
   ConversationImpl(ChatGPT chatGPT) {
     this.chatGPT = chatGPT;
-    this.messages = new ArrayList<>();
+    this.messages = new LinkedList<>();
     this.httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();
     this.objectMapper = new ObjectMapper();
   }
@@ -38,7 +38,12 @@ final class ConversationImpl implements Conversation {
   public Message ask(String question) throws IOException, InterruptedException {
     messages.add(Message.ofUser(question));
 
-    final var request = ChatGPTHttpRequest.builder().messages(messages).build();
+    final var limitedMessages =
+        chatGPT.conversationSize() > 0 && messages.size() > chatGPT.conversationSize()
+            ? messages.subList(messages.size() - chatGPT.conversationSize(), messages.size())
+            : messages;
+
+    final var request = ChatGPTHttpRequest.builder().messages(limitedMessages).build();
     final var response =
         httpClient.send(
             HttpRequest.newBuilder()

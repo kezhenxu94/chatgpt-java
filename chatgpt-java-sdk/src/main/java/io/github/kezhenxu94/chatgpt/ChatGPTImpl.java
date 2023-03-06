@@ -23,4 +23,9 @@ final class ChatGPTImpl implements ChatGPT {
   public String apiKey() {
     return apiKey;
   }
+
+  @Override
+  public int conversationSize() {
+    return conversationSize;
+  }
 }
