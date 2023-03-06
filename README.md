@@ -15,7 +15,7 @@
 ```java
 public class ChatGPTTest {
     public static void main(String[] args) throws IOException, InterruptedException {
-        final var chatGPT = ChatGPT.builder().build();
+        final var chatGPT = ChatGPT.builder().apiKey("").build(); // Setting API Key via environment variable (CHATGPT_API_KEY) is also supported.
         final var conversation = chatGPT.newConversation();
         System.out.println(conversation.ask("What's your name?").content());
         // Output: I'm an AI language model developed by OpenAI, and I don't have a name. What can I help you with today?
