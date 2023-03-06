@@ -52,13 +52,17 @@ jobs:
         with:
           name: chatgpt-cli-${{ matrix.os }}
           path: chatgpt-cli-${{ matrix.os }}
-      - run: tree
+      - name: Rename Artifacts
+        run: |
+          mv chatgpt-cli-${{ matrix.os }}/chatgpt-cli chatgpt-cli.${{ matrix.os }}
+          mv chatgpt-cli-${{ matrix.os }}/chatgpt-cli.exe-* chatgpt-cli.${{ matrix.os }}.exe
+
       - name: Upload
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            chatgpt-cli-${{ matrix.os }}/chatgpt-cli
-            chatgpt-cli-${{ matrix.os }}/chatgpt-cli.exe
+            chatgpt-cli.${{ matrix.os }}
+            chatgpt-cli.${{ matrix.os }}.exe
 
   push-docker:
     name: Publish Docker Image
