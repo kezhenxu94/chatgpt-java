@@ -54,7 +54,7 @@ jobs:
           path: chatgpt-cli-${{ matrix.os }}
       - name: Rename Artifacts
         run: |
-          mv chatgpt-cli-${{ matrix.os }}/chatgpt-cli chatgpt-cli.${{ matrix.os }}
+          mv chatgpt-cli-${{ matrix.os }}/chatgpt-cli chatgpt-cli.${{ matrix.os }} || true
           mv chatgpt-cli-${{ matrix.os }}/chatgpt-cli.exe chatgpt-cli.${{ matrix.os }}.exe || true
 
       - name: Upload
