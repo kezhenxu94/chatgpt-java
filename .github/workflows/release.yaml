@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "main"
+    pull_request:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
   workflow_dispatch:
@@ -65,6 +66,7 @@ jobs:
             chatgpt-cli.${{ matrix.os }}.exe
 
   push-docker:
+    if: startsWith(github.ref, 'refs/tags/')
     name: Publish Docker Image
     runs-on: ubuntu-latest
     permissions:
@@ -98,3 +100,22 @@ jobs:
             bootBuildImage \
             --publishImage \
             --parallel
+
+  publish-maven-packages:
+    if: startsWith(github.ref, 'refs/tags/')
+    name: Publish Maven Packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          version: '22.3.1'
+          java-version: '17'
+          cache: 'gradle'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Maven Packages
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+        run: ./gradlew --no-daemon publish
