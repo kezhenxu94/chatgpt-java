@@ -1,0 +1,14 @@
+name: ChatGPT Bot
+
+on:
+  push:
+    branches:
+      - "gha"
+
+jobs:
+  answer-question:
+    name: Answer Question
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: kezhenxu94/chatgpt-java/chatgpt-cli@v0.6.0
