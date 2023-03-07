@@ -7,14 +7,26 @@ import org.springframework.shell.standard.ShellMethod;
 
 @ShellComponent
 public class ConversationCommands {
-  private final Conversation conversation;
+  private final ChatGPT chatGPT;
+
+  private Conversation conversation;
 
   public ConversationCommands(ChatGPT chatGPT) {
-    conversation = chatGPT.newConversation();
+    this.chatGPT = chatGPT;
   }
 
-  @ShellMethod(value = "Ask a question")
+  @ShellMethod("Load a conversation by ID")
+  public String load(String id) throws Exception {
+    conversation = chatGPT.loadConversation(id);
+    return "You are now at conversation: " + id;
+  }
+
+  @ShellMethod("Ask a question")
   public String ask(String question) throws Exception {
+    if (conversation == null) {
+      conversation = chatGPT.newConversation();
+    }
+
     final var answer = conversation.ask(question);
     return answer.content().trim();
   }

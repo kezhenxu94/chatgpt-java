@@ -26,18 +26,27 @@ implementation 'io.github.kezhenxu94:chatgpt-java-sdk:${chatgpt-java.version}'
 ```java
 public class ChatGPTTest {
     public static void main(String[] args) throws IOException, InterruptedException {
-        final var chatGPT = ChatGPT.builder().apiKey("").build(); // Setting API Key via environment variable (CHATGPT_API_KEY) is also supported.
+        final var chatGPT = ChatGPT
+                .builder()
+                .dataPath(Files.createTempDirectory("chatgpt")) // Persist the chat history to a data path
+                .build();
+
+        // Start a new conversation
         final var conversation = chatGPT.newConversation();
         System.out.println(conversation.ask("What's your name?").content());
         // Output: I'm an AI language model developed by OpenAI, and I don't have a name. What can I help you with today?
         System.out.println(conversation.ask("What did I ask you?").content());
         // Output: You asked for my name.
+        conversation.save(); // Save the history manually, conversations are saved on shutdown by default.
 
         final var conversation2 = chatGPT.newConversation("You are a software engineer.");
         System.out.println(conversation2.ask("What's your job?").content());
-        // Output: As a software engineer, my job involves designing, developing, testing, and maintaining software systems and applications. It can involve tasks such as writing code, debugging programs, troubleshooting issues, and collaborating with other team members to ensure the overall functionality and efficiency of the software being developed. I may also need to work on improving existing software, conducting research to identify new technologies or methods that could benefit my team, and keeping up with industry trends and best practices to continuously improve my skills and knowledge.
         System.out.println(conversation2.ask("What's your day to day work?").content());
-        // Output: As an AI language model, I do not have a physical day-to-day work environment. However, as a software engineer, a typical day may involve various activities such as:
+
+        // Load a conversation by the ID
+        final var conversation3 = chatGPT.loadConversation(conversation.id());
+        conversation3.ask("What did I ask you?");
+        // Should print the same as the first conversation
     }
 }
 ```

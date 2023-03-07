@@ -17,11 +17,11 @@ public interface Message {
   @JsonProperty
   String content();
 
-  static Message ofUser(String content) {
+  static UserMessage ofUser(String content) {
     return new UserMessage(content);
   }
 
-  static Message ofSystem(String content) {
+  static SystemMessage ofSystem(String content) {
     return new SystemMessage(content);
   }
 }
