@@ -2,6 +2,8 @@
 
 ## Add the dependency
 
+![Maven metadata URL](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fio%2Fgithub%2Fkezhenxu94%2Fchatgpt-java-sdk%2Fmaven-metadata.xml)
+
 ### Maven
 
 ```xml
