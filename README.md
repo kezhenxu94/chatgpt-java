@@ -2,12 +2,21 @@
 
 ## Add the dependency
 
+### Maven
+
 ```xml
+
 <dependency>
     <groupId>io.github.kezhenxu94</groupId>
     <artifactId>chatgpt-java-sdk</artifactId>
     <version>${chatgpt-java.version}</version>
 </dependency>
+```
+
+### Gradle
+
+```groovy
+implementation 'io.github.kezhenxu94:chatgpt-java-sdk:${chatgpt-java.version}'
 ```
 
 ## Usage
@@ -64,7 +73,8 @@ docker run -it --rm -e CHATGPT_API_KEY kezhenxu94/chatgpt-cli
 
 ### Conversation (Interactive Mode)
 
-`chatgpt-cli` by default runs in interactive mode and the questions in one session is a conversation, so ChatGPT remembers
+`chatgpt-cli` by default runs in interactive mode and the questions in one session is a conversation, so ChatGPT
+remembers
 your previous questions inside a single conversation, you can use `ask` command to ask ChatGPT any question:
 
 ```shell
@@ -85,7 +95,8 @@ But don't forget to quote the question if it contains spaces.
 
 ### One-shot (Non-Interactive Mode)
 
-If you want to ask ChatGPT a one-shot question, you can pass the `ask` command and the question directly, so ChatGPT will
+If you want to ask ChatGPT a one-shot question, you can pass the `ask` command and the question directly, so ChatGPT
+will
 exit after it replies your questions:
 
 ```shell
