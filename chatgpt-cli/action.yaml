@@ -11,14 +11,12 @@ runs:
       env:
         GH_ACTION_REF: ${{ github.action_ref || github.ref_name }}
       run: |
-        curl -Ls https://github.com/kezhenxu94/chatgpt-java/releases/download/$GH_ACTION_REF/chatgpt-cli.ubuntu -o chatgpt-cli
-        chmod +x chatgpt-cli
-        sudo mv chatgpt-cli /usr/local/bin/chatgpt
+        sudo curl -Ls https://github.com/kezhenxu94/chatgpt-java/releases/download/${{ env.GH_ACTION_REF }}/chatgpt-cli.ubuntu -o /usr/local/bin/chatgpt
+        sudo chmod +x /usr/local/bin/chatgpt
     - if: runner.os == 'macOS'
       shell: bash
       env:
         GH_ACTION_REF: ${{ github.action_ref || github.ref_name }}
       run: |
-        curl -Ls https://github.com/kezhenxu94/chatgpt-java/releases/download/$GH_ACTION_REF/chatgpt-cli.macos -o chatgpt-cli
-        chmod +x chatgpt-cli
-        sudo mv chatgpt-cli /usr/local/bin/chatgpt
+        sudo curl -Ls https://github.com/kezhenxu94/chatgpt-java/releases/download/${{ env.GH_ACTION_REF }}/chatgpt-cli.macos -o /usr/local/bin/chatgpt
+        sudo chmod +x /usr/local/bin/chatgpt
