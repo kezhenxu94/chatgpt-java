@@ -1,3 +1,7 @@
+# TL;DR;
+
+[Chat with ChatGPT Now](https://github.com/kezhenxu94/chatgpt-java/issues/new?assignees=&labels=question&template=q--.md&title=Q%3A+).
+
 # ChatGPT Java SDK
 
 ## Add the dependency
