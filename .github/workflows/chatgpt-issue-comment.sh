@@ -1,2 +1,2 @@
 load 'issue-$ISSUE'
-ask '$QUESTION'
+ask "\"$QUESTION\""

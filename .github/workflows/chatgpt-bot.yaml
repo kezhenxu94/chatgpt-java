@@ -24,23 +24,28 @@ jobs:
           path: ~/.chatgpt
           key: conversations-${{ github.event.issue.number }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: conversations-${{ github.event.issue.number }}-
-      - uses: kezhenxu94/chatgpt-java/chatgpt-cli@v0.9.0
+      - uses: kezhenxu94/chatgpt-java/chatgpt-cli@v0.10.0
       - name: Question
         if: github.event_name == 'issues'
         env:
           QUESTION: ${{ github.event.issue.title }}
-        run: echo "QUESTION=${QUESTION#'Q:'}" >> $GITHUB_ENV
+          SYSTEM: ${{ github.event.issue.body }}
+        run: |
+          echo "QUESTION=${QUESTION#'Q:'}" >> $GITHUB_ENV
+          echo "SCRIPT=.github/workflows/chatgpt-issue-created.sh" >> $GITHUB_ENV
       - name: Question
         if: github.event_name == 'issue_comment'
         env:
           QUESTION: ${{ github.event.comment.body }}
-        run: echo "QUESTION=${QUESTION#"Q:"}" >> $GITHUB_ENV
+        run: |
+          echo "QUESTION=${QUESTION#"Q:"}" >> $GITHUB_ENV
+          echo "SCRIPT=.github/workflows/chatgpt-issue-comment.sh" >> $GITHUB_ENV
       - name: Answer
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
         run: |
-          envsubst < .github/workflows/chatgpt-script.sh > chatgpt-script.sh
+          envsubst < ${{ env.SCRIPT }} > chatgpt-script.sh
           chatgpt -Dspring.banner.location=file://$(pwd)/.github/workflows/banner.txt @chatgpt-script.sh | tee -a answer.txt
           
           gh issue comment $ISSUE -F answer.txt
