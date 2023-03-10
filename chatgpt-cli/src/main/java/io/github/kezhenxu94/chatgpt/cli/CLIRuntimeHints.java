@@ -13,7 +13,7 @@ public class CLIRuntimeHints implements RuntimeHintsRegistrar {
     hints
         .reflection()
         .registerMethod(
-            ConversationCommands.class.getDeclaredMethod("isConversationNull"),
+            ConversationCommands.class.getDeclaredMethod("systemCommandAvailable"),
             ExecutableMode.INVOKE);
   }
 }
