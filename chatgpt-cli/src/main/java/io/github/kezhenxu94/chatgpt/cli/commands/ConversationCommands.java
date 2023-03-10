@@ -21,7 +21,7 @@ public class ConversationCommands {
 
   @ShellMethod(
       "Set the system message as an instruction to guide the ChatGPT in following conversations")
-  @ShellMethodAvailability("isConversationNull")
+  @ShellMethodAvailability("systemCommandAvailable")
   public String system(String system) {
     if (conversation == null) {
       conversation = chatGPT.newConversation(system);
@@ -48,11 +48,10 @@ public class ConversationCommands {
     return answer.content().trim();
   }
 
-  Availability isConversationNull() {
+  Availability systemCommandAvailable() {
     return conversation == null
             || conversation.messages().stream().allMatch(it -> it.role() != Role.SYSTEM)
         ? Availability.available()
-        : Availability.unavailable(
-            "you are already in a conversation, system message can only be set in new conversation.");
+        : Availability.unavailable("system message is already set.");
   }
 }
