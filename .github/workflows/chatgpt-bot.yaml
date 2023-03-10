@@ -46,7 +46,7 @@ jobs:
           ISSUE: ${{ github.event.issue.number }}
         run: |
           envsubst < ${{ env.SCRIPT }} > chatgpt-script.sh
-          chatgpt -Dspring.banner.location=file://$(pwd)/.github/workflows/banner.txt @chatgpt-script.sh | tee -a answer.txt
+          chatgpt -Dlogging.level.org.jline=off -Dspring.banner.location=file://$(pwd)/.github/workflows/banner.txt @chatgpt-script.sh | tee -a answer.txt
           
           gh issue comment $ISSUE -F answer.txt
 
