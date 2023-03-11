@@ -31,14 +31,29 @@ jobs:
           QUESTION: ${{ github.event.issue.title }}
           SYSTEM: ${{ github.event.issue.body }}
         run: |
-          echo "QUESTION=${QUESTION#'Q:'}" >> $GITHUB_ENV
+          QUESTION=${QUESTION#"Q:"}
+          QUESTION=${QUESTION//\"/\\\"}
+          echo "QUESTION<<EOF" >> $GITHUB_ENV
+          echo "$QUESTION" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          
+          SYSTEM=${SYSTEM//\"/\\\"}
+          echo "SYSTEM<<EOF" >> $GITHUB_ENV
+          echo "$SYSTEM" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          
           echo "SCRIPT=.github/workflows/chatgpt-issue-created.sh" >> $GITHUB_ENV
       - name: Question
         if: github.event_name == 'issue_comment'
         env:
           QUESTION: ${{ github.event.comment.body }}
         run: |
-          echo "QUESTION=${QUESTION#"Q:"}" >> $GITHUB_ENV
+          QUESTION=${QUESTION#"Q:"}
+          QUESTION=${QUESTION//\"/\\\"}
+          echo "QUESTION<<EOF" >> $GITHUB_ENV
+          echo "$QUESTION" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
           echo "SCRIPT=.github/workflows/chatgpt-issue-comment.sh" >> $GITHUB_ENV
       - name: Answer
         env:
