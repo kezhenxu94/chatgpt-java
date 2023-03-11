@@ -117,3 +117,23 @@ exit after it replies your questions:
 ```shell
 chatgpt ask "What is your name?"
 ```
+
+# ChatGPT GitHub Action
+
+## Add OpenAI API Key Secret
+
+Add your OpenAI API key as a secret to your repository.
+Go to `https://github.com/<owner>/<repo>/settings/secrets/actions`, create "New repository secret" with the
+name `OPENAI_KEY` and your API key as the value.
+
+## Usage
+
+```yaml
+- name: Setup ChatGPT
+  uses: kezhenxu94/chatgpt-java/chatgpt-cli@v0.11.0
+- name: Answer the question
+  env:
+    CHATGPT_API_KEY: ${{ secrets.OPENAI_KEY }}
+  run: |
+    chatgpt ask "What is your name?"
+```
