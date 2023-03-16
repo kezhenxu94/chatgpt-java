@@ -23,6 +23,9 @@ public class ConversationCommands {
       "Set the system message as an instruction to guide the ChatGPT in following conversations")
   @ShellMethodAvailability("systemCommandAvailable")
   public String system(String system) {
+    if (system == null || system.isBlank()){
+      return "";
+    }
     if (conversation == null) {
       conversation = chatGPT.newConversation(system);
     } else if (conversation.messages().stream().allMatch(it -> it.role() != Role.SYSTEM)) {
