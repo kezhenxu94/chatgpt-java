@@ -63,6 +63,11 @@ final class ChatGPTImpl implements ChatGPT {
   }
 
   @Override
+  public void removeConversation(Conversation conversation) {
+    conversations.remove(conversation);
+  }
+
+  @Override
   public String apiKey() {
     return apiKey;
   }

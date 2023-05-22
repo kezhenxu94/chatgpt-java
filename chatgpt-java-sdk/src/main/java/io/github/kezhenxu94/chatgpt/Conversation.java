@@ -4,7 +4,7 @@ import io.github.kezhenxu94.chatgpt.message.Message;
 
 import java.io.IOException;import java.util.List;
 
-public interface Conversation {
+public interface Conversation extends AutoCloseable {
   Message ask(String question) throws IOException, InterruptedException;
 
   String id();

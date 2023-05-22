@@ -104,4 +104,10 @@ final class ConversationImpl implements Conversation {
         objectMapper.readValue(conversationFile, new TypeReference<List<Message>>() {});
     this.messages.addAll(messages);
   }
+
+  @Override
+  public void close() throws Exception {
+    save();
+    chatGPT.removeConversation(this);
+  }
 }

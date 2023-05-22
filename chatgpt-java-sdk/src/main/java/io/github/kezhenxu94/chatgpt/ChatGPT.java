@@ -14,6 +14,8 @@ public interface ChatGPT {
 
   Conversation loadConversation(String id) throws IOException;
 
+  void removeConversation(Conversation conversation);
+
   String apiKey();
 
   int conversationSize();

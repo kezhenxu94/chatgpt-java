@@ -4,6 +4,6 @@ plugins {
 
 allprojects {
     group = 'io.github.kezhenxu94'
-    version = '0.10.0'
+    version = '0.11.0'
     sourceCompatibility = '8'
 }
