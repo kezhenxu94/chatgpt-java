@@ -56,6 +56,7 @@ public class ChatGPTHttpResponse {
     return choices;
   }
 
+  @JsonIgnoreProperties(ignoreUnknown = true)
   public static class Usage {
     private final int promptTokens;
     private final int completionTokens;
@@ -84,6 +85,7 @@ public class ChatGPTHttpResponse {
     }
   }
 
+  @JsonIgnoreProperties(ignoreUnknown = true)
   public static class Choice {
     private final Message message;
     private final String finishReason;
