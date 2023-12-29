@@ -24,7 +24,7 @@ jobs:
           path: ~/.chatgpt
           key: conversations-${{ github.event.issue.number }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: conversations-${{ github.event.issue.number }}-
-      - uses: kezhenxu94/chatgpt-java/chatgpt-cli@v0.14.0
+      - uses: kezhenxu94/chatgpt-java/chatgpt-cli@v0.15.0
       - name: Question
         if: github.event_name == 'issues'
         env:
